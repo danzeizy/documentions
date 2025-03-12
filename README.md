@@ -162,6 +162,13 @@ await danz.sendBtnimg(
     [m.sender]
 );
 ```
+Untuk code nya agak beda ya
+```
+ {
+               "name": "cta_reply",
+               "buttonParamsJson": "{\"display_text\":\"quick_reply\",\"id\":\"message\"}"
+             }
+```
 
 ## *📌 Kirim Button Tanpa Gambar*
 
