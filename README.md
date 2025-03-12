@@ -152,7 +152,7 @@ const buttons = [
 
 const imageUrl = "https://example.com/image.jpg"; // Ganti dengan URL gambar
 
-await danz.sendBtnListImage(
+await danz.sendBtnimg(
     m.chat, 
     "Teks di sini", 
     "Pilih menu di bawah:", 
