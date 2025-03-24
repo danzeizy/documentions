@@ -152,15 +152,7 @@ const buttons = [
 
 const imageUrl = "https://example.com/image.jpg"; // Ganti dengan URL gambar
 
-await danz.sendBtnimg(
-    m.chat, 
-    "Teks di sini", 
-    "Pilih menu di bawah:", 
-    imageUrl, 
-    buttons, 
-    m, 
-    [m.sender]
-);
+await danz.sendBtnimg(m.chat, teks, danzres, buttons, m, [ m.sender,]);
 ```
 Untuk code nya agak beda ya
 ```
@@ -176,23 +168,33 @@ Untuk code nya agak beda ya
 
 ```
 const buttons = [
-    {
-        name: "cta_url",
-        params: `{"display_text":"Google","url":"https://www.google.com","merchant_url":"https://www.google.com"}`
-    },
-    {
-        name: "cta_reply",
-        params: `{"display_text":"Quick Reply","id":"message"}`
-    }
-];
+      {
+          name: "single_select",
+          params: `{
+              "title": "Pilih Opsi",
+              "sections": [
+                  {
+                      "menu": ".menu",
+                      "highlight_label": "Label",
+                      "rows": [
+                          {
+                              "title": "Opsi 1",
+                              "description": "Deskripsi Opsi 1",
+                              "id": "id1"
+                          }
+                      ]
+                  }
+              ]
+          }`
+      }
+    ];
 
-await danz.sendBtnList(
-    m.chat, 
-    "Teksnya", 
-    "Bot", 
-    buttons, 
-    m
-);
+await danz.sendBtn(
+      m.chat, 
+      "Teksnya", 
+      buttons, 
+      m
+    );
 ```
 
 ## *📌 Kirim File*
