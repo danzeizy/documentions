@@ -52,12 +52,137 @@ Maksimal 3 quick reply dalam satu pesan.
 
 
 ```
-const buttons = [
-    {
-        name: "cta_reply",
-        params: `{"display_text":"Quick Reply","id":".tes"}`
-    }
-];
+case 'cmd':
+			case 'menu':{
+				let timestampe = speed();
+				let latensie = speed() - timestampe;
+				let a = db.data.users[m.sender];
+				let me = m.sender;
+				let teks = `┌──❖ Halo, Kak ${pushname}! 👋✨\n│ ✧ ${ucapanWaktu} yaa! 😊\n└────────────⳹\n\n${readmore}🌟 *𝐁𝐎𝐓 𝐈𝐍𝐅𝐎*\n⨳ *Speed:* ${latensie.toFixed(4)} ms\n⨳ *Runtime:* ${runtime(process.uptime())}\n⨳ *Bot:* ${botName}\n⨳ *Owner:* +${ownerNumber}\n⨳ *Mode:* ${haruka.public ? 'Public' : 'Self'}\n⨳ *Platform:* ${os.platform()}\n⨳ *Total User:* ${Object.keys(db.data.users).length}\n⨳ *Total Chat:* ${Object.keys(global.db.data.chats).length}\n\n🧍 *𝐔𝐒𝐄𝐑 𝐈𝐍𝐅𝐎*\n⨳ *Nama:* ${pushname}\n⨳ *Number:* +${me.split('@')[0]}\n⨳ *Limit:* ${a.limit}\n⨳ *Status:* ${isVip ? 'VIP User' : isPremium ? 'Premium User' : 'Free User'}\n⨳ *Serial:* ${a.serialNumber}\n\n🕒 *𝐓𝐈𝐌𝐄 𝐈𝐍𝐅𝐎*\n⨳ *Time:* ${time}\n⨳ *Date:* ${date}\n\n✨ *Silahkan pilih menu di bawah ini, Kak!* 🥰`;
+				let msg = generateWAMessageFromContent(m.chat, {
+					viewOnceMessage: {
+						message: {
+							"messageContextInfo": {
+								"deviceListMetadata": {},
+								"deviceListMetadataVersion": 2
+							},
+							interactiveMessage: proto.Message.InteractiveMessage.create({
+								body: proto.Message.InteractiveMessage.Body.create({
+									text: teks
+								}),
+								footer: proto.Message.InteractiveMessage.Footer.create({
+									text: ownerName
+								}),
+								header: proto.Message.InteractiveMessage.Header.create({
+									...(await prepareWAMessageMedia({ image: thumb }, { upload: haruka.waUploadToServer })), 
+									title: '',
+									subtitle: '',
+									hasMediaAttachment: false
+								}),
+								nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+									buttons: [
+										{
+											"name": "single_select",
+											"buttonParamsJson": `{
+												"title": "Click Here ⎙",
+												"sections": [{
+													"title": "Select Menu",
+													"rows": [{
+														"title": "📚 All Menu",
+														"description": "Lihat semua menu seru di sini, kak! 🌟",
+														"id": "${prefix}allmenu"
+													},
+													{
+														"title": "🗝️ Owner's Secret Room",
+														"description": "Psst... Rahasia nih! Cuma kakak spesial yang bisa masuk~ 🤫",
+														"id": "${prefix}ownermenu"
+													},
+													{
+														"title": "👥 Group Menu",
+														"description": "Ayo intip menu khusus grup, seru-seruan bareng! 👥",
+														"id": "${prefix}groupmenu"
+													},
+													{
+														"title": "🔍 Search Menu",
+														"description": "Cari apa aja di sini, Mora bantu nemuin kok~ 🔍",
+														"id": "${prefix}searchmenu"
+													},
+													{
+														"title": "📥 Download Menu",
+														"description": "Unduh apa yang kakak butuhin, gampang kok! 📥",
+														"id": "${prefix}downloadmenu"
+													},
+													{
+														"title": "🛠️ Converter/Tools Menu",
+														"description": "Bikin stiker, ubah audio, dan banyak alat seru lainnya di sini, Kak! 🎵✨",
+														"id": "${prefix}convertmenu"
+													},
+													{
+														"title": "🛒 Store Menu",
+														"description": "Belanja-belanja lucu di sini aja, kak! 🛒",
+														"id": "${prefix}storemenu"
+													},
+													{
+														"title": "🦖 Pterodactyl Menu",
+														"description": "Fitur panel Pterodactyl untuk mengelola server, menambah atau menghapus user, serta mengatur sumber daya server dengan mudah.",
+														"id": "${prefix}panelmenu"
+													},
+													{
+														"title": "🎮 Game Menu",
+														"description": "Fitur Game untuk seru-seruan seperti tebak-tebakan dsb. 😋",
+														"id": "${prefix}gamemenu"
+													},
+													{
+														"title": "🎉 Fun Menu",
+														"description": "Fitur Fun untuk seru-seruan, dicoba yuk! ✨",
+														"id": "${prefix}funmenu"
+													},
+													{
+														"title": "😋 Random Anime Menu",
+														"description": "Menu yang berisi gambar Anime, cari gambar waifu kamu disini ya! 😍",
+														"id": "${prefix}randomanimemenu"
+													},
+													{
+														"title": "✨ Other Menu",
+														"description": "Menu tambahan yang nggak kalah menarik, cek yuk! 💫",
+														"id": "${prefix}othermenu"
+													}]
+												}]
+											}`
+										},
+										{
+											"name": "cta_url",
+											"buttonParamsJson": `{
+												"display_text": "My Handsome Owner 🐬",
+												"url": "https://api.whatsapp.com/send?phone=${ownerNumber}",
+												"merchant_url": "https://www.google.com"
+											}`
+										}
+									],
+								}),
+								contextInfo: {
+									mentionedJid: [m.sender], 
+									forwardingScore: 999999,
+									isForwarded: true,
+									forwardedNewsletterMessageInfo: {
+										newsletterJid: saluran,
+										newsletterName: saluranName,
+										serverMessageId: 143
+									}
+								}
+							})
+						}
+					}
+				}, { 
+					quoted: m 
+				})
+
+				await haruka.relayMessage(
+					msg.key.remoteJid, 
+					msg.message, { 
+						messageId: msg.key.id 
+					}
+				);
 ```
 
 ## **3. URL**
